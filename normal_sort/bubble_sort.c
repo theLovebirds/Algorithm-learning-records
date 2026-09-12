@@ -57,7 +57,6 @@ int main()
 
     int *array = malloc(sizeof(int) * ARRAYLEN);
     array = createArray(array);
-    printf("\n");
     sort(array);
     free(array);
     return 0;

@@ -20,7 +20,7 @@
 ## 排序
 ### 洗牌
 #### Fisher-Yates-Shuffle算法
-随机抽取数组中的一个数并将其放置到新数组中。该算法对应的是现实中洗牌手法中的抽牌，将随机抽出的元素放到另外一个数组中，从而得到一个被打乱的数组。
+随机抽取数组中的一个元素并将其放置到新数组中。该算法对应的是现实中洗牌手法中的抽牌，将随机抽出的元素放到另外一个数组中，从而得到一个被打乱的数组。
 [C语言实例](./shuffling/Fisher_Yates_shuffle.c):
 ~~~
 int shuffle(int array[],int targetArray[]){
@@ -38,7 +38,7 @@ int shuffle(int array[],int targetArray[]){
 }
 ~~~
 #### Knuth-Durstenfeld-Shuffle算法
-随机抽取一个数字并将其放置到原数组的末尾，并在剩余的数字中继续抽取放置。该算法对应的是现实中洗牌手法中的换牌，在没处理过的数组中抽出一个或多个元素并将其放置到数组末尾末尾，并反复重复该步骤直到将牌堆打乱。
+随机抽取一个元素并将其放置到原数组的末尾，并在剩余的元素中继续抽取放置。该算法对应的是现实中洗牌手法中的换牌，在没处理过的数组中抽出一个或多个元素并将其放置到数组末尾末尾，并反复重复该步骤直到将牌堆打乱。
 [C语言实例](./shuffling/Knuth_Durstenfeld_shuffle.c):
 ~~~
 int * shuffle(int * array){
@@ -52,7 +52,7 @@ int * shuffle(int * array){
 }
 ~~~
 #### Inside-Out-Algorithm算法
-正序遍历元素，将第i个元素随机插入到前i个位置中（包括i）。该算法对应的是现实中洗牌手法中的插牌，将一个数组看做两部分，分别对应已处理与未处理，从未处理的部分中选择元素并将其随机插入到已处理的部分中，通过随机插入将数组打乱。
+正序遍历数组，将第i个元素随机插入到前i个位置中（包括i）。该算法对应的是现实中洗牌手法中的插牌，将一个数组看做两部分，分别对应已处理与未处理，从未处理的部分中选择元素并将其随机插入到已处理的部分中，通过随机插入将数组打乱。
 [C语言实例](./shuffling/Inside_Out_Algorithm.c):
 ~~~
 int * shuffle(int * array){
@@ -67,16 +67,17 @@ int * shuffle(int * array){
 ~~~
 
 ### 冒泡
-冒泡排序通过重复的与相邻元素比较和交换实现排序，这个过程就像气泡从底部升到顶部一样，因此得名冒泡排序。
+冒泡排序通过重复的与相邻元素比较和交换，选择未处理部分中最大的元素并依次排序，这个过程就像气泡从底部升到顶部一样，因此得名冒泡排序。
 
-冒泡排序从数组最左侧开始向右遍历，并将数组分作未处理部分与已处理部分，处理过程为：
-1. 选择未处理部分最左侧部分向右遍历
+冒泡排序会对数组进行单向遍历，并将数组分作未处理部分与已处理部分，处理过程为：
+1. 选择边缘元素
 2. 比较相邻元素大小
 3. 若大于相邻元素则交换，若小于相邻元素则使用相邻元素进行后续步骤
 4. 当元素遍历至末尾已处理部分时，将其排至已处理部分首位，并重复上述步骤
 
-冒泡数组的处理过程可以看做一群泡泡从水中往水面上升，升到水面上时泡泡破裂化成空气。水对应数组的未处理部分，水中的气泡看做未处理元素，空气对应已处理的部分，而水面则是当前处理元素的正确位置。刚开始处理时，空气全都在水中以气泡的形式存在，由于大气泡上升速度比小气泡快，因此气泡会按照从大到小的顺序浮上水面并化成空气。将这个过程代码化就能变成冒泡排序。
+冒泡数组通过选中边缘目标循环对比相邻元素来进行排序，因为每轮循环都会选择未排序部分中最大的元素进行排序，像水中的气泡一样，因此得名冒泡排序。
 
+时间复杂度O(n^2^)，空间复杂度O(1)。
 [C语言实例](./normal_sort/bubble_sort.c):
 ~~~
 int *sort(int *array)
@@ -109,6 +110,14 @@ int *sort(int *array)
 ~~~
 
 ### 选择
+选择排序通过寻找数组未处理部分中的最小元素并插入至已处理部分末尾实现排序
+
+选择排序会对数组进行单向遍历，寻找其中最小的元素，并将其排序，处理过程为：
+1. 单向遍历数组未处理部分
+2. 记录未处理部分中最小的元素
+3. 遍历结束后将未处理部分中最小的元素插入至已处理部分末尾，并重复上述步骤
+
+时间复杂度O(n^2^)，空间复杂度O(1)。
 ~~~
 int *sort(int *array)
 {
@@ -128,15 +137,14 @@ int *sort(int *array)
         temp = array[i];
         array[i] = array[swapNum];
         array[swapNum] = temp;
-        for (i = 0; i < ARRAYLEN; i++)
-        {
-            printf("%d ", array[i]);
-        }
     }
     return array;
 }
 ~~~
 ### 插入
+插入排序通过在未处理部分中选择一个元素，并遍历比较已处理部分中的每一个元素，将其插入到合适的位置进行排序
+
+
 ~~~
 int *sort(int *array)
 {
@@ -150,11 +158,46 @@ int *sort(int *array)
     }
     return array;
 }
-
 ~~~
 ### 快速
 ~~~
+int swap(int *array, int i, int j)
+{
+    int temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+}
+
+int partition(int * array, int left ,int right){
+    int i = left, j = right;
+    while (i < j)
+    {
+        while (i < j && array[j] >= array[left])
+        {
+            j -= 1;
+        }
+        while (i < j && array[i] <= array[left])
+        {
+            i += 1;
+        }
+        swap(array,i,j);
+    }
+    swap(array,left,i);
+    return i;
+}
+
+int *quickSort(int *array, int left, int right)
+{
+    if(left >= right){
+        return array;
+    }
+    int pivot = partition(array, left, right);
+    quickSort(array,left,pivot - 1);
+    quickSort(array,pivot + 1,right);
+    return array;
+}
 ~~~
+### 归并
 ## 分治
 
 ### 递归

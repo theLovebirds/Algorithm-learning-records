@@ -22,10 +22,6 @@ int *sort(int *array)
         temp = array[i];
         array[i] = array[swapNum];
         array[swapNum] = temp;
-        for (i = 0; i < ARRAYLEN; i++)
-        {
-            printf("%d ", array[i]);
-        }
     }
     return array;
 }
@@ -55,7 +51,6 @@ int main()
 
     int *array = malloc(sizeof(int) * ARRAYLEN);
     array = createArray(array);
-    printf("\n");
     sort(array);
     free(array);
     return 0;
